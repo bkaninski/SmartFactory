@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactory", "SmartFactory\SmartFactory.csproj", "{E5F5DA17-C893-448A-96B4-1B4A4C57ADA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5F5DA17-C893-448A-96B4-1B4A4C57ADA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F5DA17-C893-448A-96B4-1B4A4C57ADA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F5DA17-C893-448A-96B4-1B4A4C57ADA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F5DA17-C893-448A-96B4-1B4A4C57ADA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACBD52C9-F0A3-454B-B608-922D6D2A2277}
+	EndGlobalSection
+EndGlobal
