@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SmartFactory.Data
+namespace SmartFactory.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
