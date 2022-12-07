@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using SmartFactory.Infrastructure.Configuration;
+using SmartFactory.Infrastructure.Data.Configuration;
 
 namespace SmartFactory.Infrastructure.Data
 {
@@ -13,6 +15,14 @@ namespace SmartFactory.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new PositionConfiguration());
+            builder.ApplyConfiguration(new EmployeeConfiguration());
+            builder.ApplyConfiguration(new ShiftConfiguration());
+            builder.ApplyConfiguration(new ProductionConfiguration());
+            builder.ApplyConfiguration(new LeaveConfiguration());
+
+
             base.OnModelCreating(builder);
         }
 

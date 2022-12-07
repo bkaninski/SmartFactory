@@ -27,6 +27,8 @@ namespace SmartFactory.Infrastructure.Data
         [Required]
         public int ProductionPreparation { get; set; }
 
+        public int StockBeforePacking { get; set; }
+
         [Required]
         public int ProcuctionPackaging { get; set; }
 
