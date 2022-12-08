@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LastWeekProductionQueryModel>
+
+@{
+    ViewBag.Title = "Произведената продукция за последната седмица";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+@if(Model.Count()==0)
+{
+    
+        <div class="mt-4 p-5 bg-light">
+            <h1 class="display-4">НЯМА ДАННИ ЗА ПРОДУКЦИЯ ПРЕЗ ПОСЛЕДНИТЕ СЕДЕМ ДНИ</h1>
+            <p class="lead">
+                Няма данни за продукция през последната седмица! Време е за работа!
+            </p>
+            <hr class="my-4">
+            <p class="lead">
+                @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
+                {
+                <a asp-controller="Production" asp-action="CurrentShift" class="btn btn-primary btn-lg"
+           role="button">Текуща смяна</a>
+                }
+            </p>
+        </div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-center">
+                <th width="98" scope="col">Дата  </th>
+                <th scope="col">Смяна</th>
+                <th scope="col">Подготовка</th>
+                <th scope="col">Буфер преди пакетиране</th>
+                <th scope="col">Пакетиране</th>
+                <th scope="col">Буфер преди пакетиране в края на смяната</th>
+                <th scope="col">Коментар за смяната</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var production in Model)
+            {
+                <tr>
+               
+                    <td scope="row">@production.Date</td>
+                    <td class="text-center">@production.TypeOfShift.ToString()</td>
+                    <td class="text-center">@production.ProductionPreparation</td>
+                    <td class ="text-center">@production.StockBeforePacking</td>
+                    <td class="text-center">@production.ProductionPackaging</td>
+                    <td class="text-center">@production.StockBeforePackingAfter</td>
+                    <td>@production.Coment</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}

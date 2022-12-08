@@ -1,0 +1,37 @@
+﻿@model EmployeeDetailsModel
+
+@{
+    ViewBag.Title = "Информация за служител" ;
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@string.Concat(Model.FirstName," ",Model.LastName)</u></p>
+            <p>Възраст: <b>@Model.Age</b></p>
+            <p>Адрес: <b>@Model.Address</b></p>
+            <p>
+                Заплата:
+                <b>@String.Format("{0:f2}", Model.Salary) BGN</b>
+            </p>
+            <p>Длъжност:@Model.Position</p>
+            <div class="form-inline">
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-warning" asp-controller="Employee" asp-action="Edit"
+                   asp-route-id="@Model.Id">Edit</a>
+                   <form class="ml-2" asp-controller="Employee" asp-action="Leave"
+                      asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Leave" />
+                        </form>
+                    }
+                }
+            </div>
+           
+        </div>
+    </div>
+</div>

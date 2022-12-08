@@ -1,0 +1,96 @@
+﻿@model AllEmployesQueryModel
+
+@{
+    ViewBag.Title = "Служителите на Умната Фабрика";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Position">Длъжност</label>
+                <select asp-for="Position" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var position in Model.Positions)
+                    {
+                        <option value="@position">@position</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm">Ключова дума</label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="Sorting">Сортиране според</label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0">Заплата</option>
+                    <option value="1">Длъжност</option>
+                    <option value="2">Възраст</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Търсене" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="row mb-5">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Име</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Възраст</th>
+                <th scope="col">Длъжност</th>
+                <th scope="col">Заплата</th>
+                <th width="400" scope="col">Адрес</th>
+                <th scope="col">Опции</th>
+             </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+
+                    <td scope="row" class="text-center">@employee.FirstName</td>
+                    <td class="text-center">@employee.LastName</td>
+                    <td class="text-center">@employee.Age</td>
+                    <td class="text-center">@employee.Position</td>
+                    <td class="text-center">@employee.Salary</td>
+                    <td class="text-justify">@employee.Address</td>
+                    <td class="text-center">
+                        <a asp-controller="Employee" asp-action="Details" asp-route-id="@employee.Id"
+                       class="btn btn-success">Details</a>
+                        <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id"
+                       class="btn btn-warning">Edit</a>
+                        <a asp-controller="Employee" asp-action="Leave" asp-route-id="@employee.Id"
+                       class="btn btn-danger">Leave</a>
+
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@if (!Model.Employees.Any())
+{
+    <h2 class="text-center">Няма намерени служители според зададените критерии!</h2>
+}
+

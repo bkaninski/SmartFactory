@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SmartFactory.Core\SmartFactory.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\toastr\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,14 @@
+﻿@model EmployeeEditModel
+
+@{
+    ViewBag.Title = "Промяна в профила на служител";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_EmployeeEditFormPartial" model="@Model" />
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
