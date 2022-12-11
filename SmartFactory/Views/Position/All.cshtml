@@ -1,0 +1,43 @@
+﻿@model PositionAllModel
+@{
+    ViewBag.Title = "Списък на длъжностите";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+<div class="row mb-5">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Позиция</th>
+                <th scope="col">Опции</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var position in Model.Positions)
+            {
+                <tr>
+
+                    
+                    <td class="text-justify">@position.Title</td>
+                    <td class="text-center">
+                        <a asp-controller="Position" asp-action="Details" asp-route-id="@position.Id"
+                       class="btn btn-success">Детайли</a>
+                        <a asp-controller="Position" asp-action="Edit" asp-route-id="@position.Id"
+                       class="btn btn-warning">Промяна</a>
+                        @{
+                            var parm = new Dictionary<string, string>();
+                            parm.Add( "PositionId", position.Id.ToString() );
+                        }
+                        <a asp-controller="Employee" asp-action="AddEmployee" asp-all-route="@parm"
+                       class="btn btn-danger">Добави служител</a>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

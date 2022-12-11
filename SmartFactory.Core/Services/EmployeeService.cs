@@ -70,25 +70,6 @@ namespace SmartFactory.Core.Services
             return result;
         }
 
-        public async Task<IEnumerable<PositionModel>> AllPositions()
-        {
-            return await repo.AllReadonly<Position>()
-                .OrderBy(p => p.Title)
-                .Select(p => new PositionModel()
-                {
-                    Id = p.Id,  
-                    Title = p.Title
-                })
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<string>> AllPositionsNames()
-        {
-            return await repo.AllReadonly<Position>()
-                .Select(p => p.Title)
-                .Distinct()
-                .ToListAsync();
-        }
 
         public async Task<int> Create(string userId, EmployeeAddModel model)
         {

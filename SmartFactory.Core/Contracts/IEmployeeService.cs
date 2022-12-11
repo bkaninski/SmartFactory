@@ -11,10 +11,6 @@ namespace SmartFactory.Core.Contracts
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<PositionModel>> AllPositions();
-
-        Task<bool> PositionExists(int positionId);
-
         Task<string> CreateUser(string email);
 
         Task<int> Create(string userId,EmployeeAddModel model);
@@ -24,7 +20,7 @@ namespace SmartFactory.Core.Contracts
             string? searchTerm = null,
             EmployeeSorting sorting = EmployeeSorting.Длъжност);
 
-        Task<IEnumerable<string>> AllPositionsNames();
+       
 
         Task<EmployeeDetailsModel> EmployeeDetailsById(int id);
 

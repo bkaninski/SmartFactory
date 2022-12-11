@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SmartFactory.Core.Contracts;
@@ -10,11 +11,14 @@ namespace SmartFactory.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService employeeService;
+        private readonly IPositionService positionService;
 
         public EmployeeController(
-            IEmployeeService _employeeService)
+            IEmployeeService _employeeService,
+            IPositionService _positionService)
         {
             employeeService = _employeeService;
+            positionService = _positionService;
         }
 
 
@@ -25,7 +29,7 @@ namespace SmartFactory.Controllers
                 query.SearchTerm,
                 query.Sorting);
 
-            query.Positions = await employeeService.AllPositionsNames();
+            query.Positions = await positionService.AllPositionsNames();
             query.Employees = result.Employees;
 
             return View(query);
@@ -36,8 +40,9 @@ namespace SmartFactory.Controllers
         {
             var model = new EmployeeAddModel()
             {
-                Positions = await employeeService.AllPositions()
+               Positions = await positionService.AllPositions()
             };
+          
 
             return View(model);
         }
@@ -45,7 +50,7 @@ namespace SmartFactory.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployee(EmployeeAddModel model)
         {
-            if (await employeeService.PositionExists(model.PositionId)==false)
+            if (await positionService.PositionExists(model.PositionId)==false)
             {
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
 
@@ -92,7 +97,7 @@ namespace SmartFactory.Controllers
                 Address = employee.Address,
                 PositionId = positionId,
                 Salary = employee.Salary,
-                Positions = await employeeService.AllPositions()
+                Positions = await positionService.AllPositions()
             };
 
             return View(model);
@@ -105,22 +110,22 @@ namespace SmartFactory.Controllers
             {
                 ModelState.AddModelError("", "Служителя не съществува!");
 
-                model.Positions = await employeeService.AllPositions();
+                model.Positions = await positionService.AllPositions();
 
                 return View(model);
             }
 
-            if ((await employeeService.PositionExists(model.PositionId))==false)
+            if ((await positionService.PositionExists(model.PositionId))==false)
             {
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
-                model.Positions = await employeeService.AllPositions();
+                model.Positions = await positionService.AllPositions();
 
                 return View(model);
             }
 
             if (ModelState.IsValid==false)
             {
-                model.Positions = await employeeService.AllPositions();
+                model.Positions = await positionService.AllPositions();
                 return View(model);
             }
 
