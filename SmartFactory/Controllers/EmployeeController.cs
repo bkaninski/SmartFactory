@@ -50,7 +50,7 @@ namespace SmartFactory.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployee(EmployeeAddModel model)
         {
-            if (await positionService.PositionExists(model.PositionId)==false)
+            if (await positionService.PositionExistsById(model.PositionId)==false)
             {
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
 
@@ -115,7 +115,7 @@ namespace SmartFactory.Controllers
                 return View(model);
             }
 
-            if ((await positionService.PositionExists(model.PositionId))==false)
+            if ((await positionService.PositionExistsById(model.PositionId))==false)
             {
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
                 model.Positions = await positionService.AllPositions();

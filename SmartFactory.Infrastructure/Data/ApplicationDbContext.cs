@@ -21,6 +21,7 @@ namespace SmartFactory.Infrastructure.Data
             builder.ApplyConfiguration(new ShiftConfiguration());
             builder.ApplyConfiguration(new ProductionConfiguration());
             builder.ApplyConfiguration(new LeaveConfiguration());
+            builder.ApplyConfiguration(new CareerConfiguration());
 
 
             base.OnModelCreating(builder);
@@ -35,5 +36,6 @@ namespace SmartFactory.Infrastructure.Data
         public DbSet<Production> Productions { get; set; }
 
         public DbSet<Leave> Leaves { get; set; }
+        public DbSet<Career> Careers { get; set; }
     }
 }

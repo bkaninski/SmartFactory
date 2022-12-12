@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactory.Core.Contracts;
+using SmartFactory.Core.Models.Employee;
 using SmartFactory.Core.Models.Position;
 using SmartFactory.Infrastructure.Data;
 using SmartFactory.Infrastructure.Data.Common;
@@ -41,8 +42,9 @@ namespace SmartFactory.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<int> Create(PositionAddModel model)
+        public async Task<int> Create(PositionQueryModel model)
         {
+            
             var position = new Position()
             {
                Title=model.Title,
@@ -56,10 +58,42 @@ namespace SmartFactory.Core.Services
             return position.Id;
         }
 
-        public async Task<bool> PositionExists(int positionId)
+        public async Task Edit(int positionId, PositionEditModel model)
+        {
+            var position = await repo.GetByIdAsync<Position>(positionId);
+
+            position.Title = model.Title;
+            position.Description = model.Description;
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<PositionEditModel> PositionDetailsById(int id)
+        {
+            return await repo.AllReadonly<Position>()
+                .Where(p => p.Id == id)
+                .Select(p => new PositionEditModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description
+
+                })
+                .FirstAsync();
+        }
+
+        public async Task<bool> PositionExistsById(int positionId)
         {
             return await repo.AllReadonly<Position>()
                 .AnyAsync(p => p.Id == positionId);
+        }
+
+        
+
+        public async Task<bool> PositionExistsByTitle(string positionTitle)
+        {
+            return await repo.AllReadonly<Position>()
+              .AnyAsync(p => p.Title == positionTitle);
         }
     }
 }

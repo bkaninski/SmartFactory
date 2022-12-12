@@ -1,0 +1,32 @@
+﻿@model PositionEditModel
+
+@{
+    ViewBag.Title = "Информация за длъжност" ;
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>Описание: <b>@Model.Description</b></p>
+           
+            <div class="form-inline">
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-warning" asp-controller="Position" asp-action="Edit"
+                   asp-route-id="@Model.Id">Промяна</a>
+                   <form class="ml-2" asp-controller="Position" asp-action="Delete"
+                      asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Изтриване" />
+                        </form>
+                    
+                }
+            </div>
+           
+        </div>
+    </div>
+</div>

@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace SmartFactory.Core.Models.Position
 {
-    public class PositionAddModel
+    public class PositionEditModel
     {
+
+        public int Id { get; set; }
+
         [Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name ="Наименование")]

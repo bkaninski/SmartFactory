@@ -33,17 +33,23 @@ namespace SmartFactory.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPosition()
         {
-            var model = new PositionAddModel();
+            var model = new PositionQueryModel();
             
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPosition(PositionAddModel model)
+        public async Task<IActionResult> AddPosition(PositionQueryModel model)
         {
 
             if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
+            if ((await positionService.PositionExistsByTitle(model.Title))==true)
+            {
+                ModelState.AddModelError(nameof(model.Title), "Длъжността вече съществува!");
                 return View(model);
             }
 
@@ -55,21 +61,52 @@ namespace SmartFactory.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new EmployeeEditModel();
+            if ((await positionService.PositionExistsById(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var position = await positionService.PositionDetailsById(id);
+
+            var model = new PositionEditModel()
+            {
+                Id = position.Id,
+                Title = position.Title,
+                Description = position.Description
+               
+            };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EmployeeEditModel model)
+        public async Task<IActionResult> Edit(int id, PositionEditModel model)
         {
-            return RedirectToAction(nameof(Details), new { id });
+            if ((await positionService.PositionExistsById(model.Id)) == false)
+            {
+                ModelState.AddModelError("", "Длъжността не съществува!");
+
+                return View(model);
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
+            await positionService.Edit(model.Id, model);
+
+            return RedirectToAction(nameof(Details), new { model.Id });
 
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var model = new PositionDetailsModel();
+            if ((await positionService.PositionExistsById(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var model = await positionService.PositionDetailsById(id);
 
             return View(model);
         }

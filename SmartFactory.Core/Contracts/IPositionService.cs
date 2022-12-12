@@ -13,11 +13,17 @@ namespace SmartFactory.Core.Contracts
     {
         Task<IEnumerable<PositionModel>> AllPositions();
 
-        Task<bool> PositionExists(int positionId);
+        Task<bool> PositionExistsById(int positionId);
+
+        Task<bool> PositionExistsByTitle(string positionTitle);
 
         Task<IEnumerable<string>> AllPositionsNames();
 
-        Task<int> Create(PositionAddModel model);
+        Task<int> Create(PositionQueryModel model);
+
+        Task Edit(int positionId, PositionEditModel model);
+        Task<PositionEditModel> PositionDetailsById(int id);
+
 
     }
 }
