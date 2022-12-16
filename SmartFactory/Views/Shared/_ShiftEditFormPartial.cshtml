@@ -1,0 +1,74 @@
+﻿@model ShiftEditModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+
+            <input type="hidden" asp-for="@Model.Id" />
+            
+            <div class="form-group">
+                <label asp-for="Date"></label>
+                <input type="text" name="Date" asp-for="Date" asp-format="{0:dd/MM/yyyy}" />
+
+            </div>
+   
+    <div class="form-group">
+
+        <label asp-for="TypeOfShift"></label>
+        <select asp-for="TypeOfShift" class="form-control">
+
+           
+                <option value="@SmartFactory.Infrastructure.Data.TypeOfShift.Late">Late</option>
+                <option value="@SmartFactory.Infrastructure.Data.TypeOfShift.Early">Early</option>
+        </select>
+        <span asp-validation-for="TypeOfShift" class="small text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+
+        <label asp-for="ElectricianId"></label>
+        <select asp-for="ElectricianId" class="form-control">
+
+
+            @foreach (var elec in Model.Electrician)
+            {
+                <option value="@elec.Id">@string.Concat(elec.FirstName," ",elec.LastName)</option>
+            }
+        </select>
+        <span asp-validation-for="ElectricianId" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+
+        <label asp-for="OperatorPreparationId"></label>
+        <select asp-for="OperatorPreparationId" class="form-control">
+
+
+            @foreach (var opPre in Model.OperatorPreparation)
+            {
+                <option value="@opPre.Id">@string.Concat(opPre.FirstName," ",opPre.LastName)</option>
+            }
+        </select>
+        <span asp-validation-for="ElectricianId" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+
+        <label asp-for="OperatorPackagingId"></label>
+        <select asp-for="OperatorPackagingId" class="form-control">
+
+
+            @foreach (var opPak in Model.OperatorPackaging)
+            {
+                <option value="@opPak.Id">@string.Concat(opPak.FirstName," ",opPak.LastName)</option>
+            }
+        </select>
+        <span asp-validation-for="ElectricianId" class="small text-danger"></span>
+    </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

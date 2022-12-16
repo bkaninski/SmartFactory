@@ -1,4 +1,4 @@
-﻿
+﻿@model ProductionViewModel
 
 
 @{
@@ -8,3 +8,98 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+@if (Model.ShiftId==null)
+{
+    <div class="mt-4 p-5 ">
+        <h3 class="text-center">НЯМА СМЯна</h3>
+        <p class="text-center">
+            Няма данни за продукция през последната седмица! Време е за работа!
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Shift" asp-action="Add" class="btn btn-primary btn-lg"
+           role="button">Текуща смяна</a>
+            }
+        </p>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <form method="post">
+
+                <input type="hidden" asp-for="@Model.ShiftId" />
+
+
+                <div class="form-group">
+                    <label asp-for="Date">Дата</label>
+                    <input asp-for="Date" asp-format="{0:dd/MM/yyyy}" class="form-control" type="datetime" placeholder="Дата">
+                    <span asp-validation-for="Date" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeOfShift">Смяна</label>
+                    <input asp-for="TypeOfShift"  class="form-control" placeholder="Смяна">
+                    <span asp-validation-for="TypeOfShift" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Electrical">Електротехник</label>
+                    <input asp-for="Electrical" class="form-control" placeholder="Електротехник" readonly>
+                    <span asp-validation-for="Electrical" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StockBeforePacking">Буфер в началото на смяната</label>
+                    <input asp-for="StockBeforePacking" id="bufS" class="form-control" placeholder="Буфер в началото на смяната" readonly>
+                    <span asp-validation-for="StockBeforePacking" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductionPreparation">Продукция станция подготовка</label>
+                    <input asp-for="ProductionPreparation" onblur="findTotal()" id="pordPre"  class="form-control" placeholder="Продукция станция подготовка">
+                    <span asp-validation-for="ProductionPreparation" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OperatorPreparation">Оператор станция подготовка</label>
+                    <input asp-for="OperatorPreparation"  class="form-control" placeholder="Оператор станция подготовка" readonly>
+                    <span asp-validation-for="OperatorPreparation" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProcuctionPackaging">Продукция станция пакетиране</label>
+                    <input asp-for="ProcuctionPackaging" onblur="findTotal()" id="prodPack" class="form-control" placeholder="Продукция станция пакетиране">
+                    <span asp-validation-for="ProcuctionPackaging" class="small text-danger"></span>
+                </div>
+                  <div class="form-group">
+                    <label asp-for="OperatorPackaging">Оператор станция подготовка</label>
+                    <input asp-for="OperatorPackaging" class="form-control" placeholder="Оператор станция пакетиране" readonly>
+                    <span asp-validation-for="OperatorPackaging" class="small text-danger"></span>
+               
+                <div class="form-group">
+                    <label asp-for="AfterShiftBufer">Буфер в края на смяната</label>
+                    <input asp-for="AfterShiftBufer" id="total" class="form-control" placeholder="Буфер в края на смяната"  >
+                    <span asp-validation-for="AfterShiftBufer" class="small text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <input class="btn btn-primary mt-3" type="submit" value="Save" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function findTotal() {
+            var prodPre = document.getElementById('pordPre');
+            var prodPack = document.getElementById('prodPack');
+            var bufS = document.getElementById('bufS');
+            var tot = 0;
+            tot = (parseInt(prodPre.value) + parseInt(bufS.value)) - parseInt(prodPack.value);
+            document.getElementById('total').value = tot;
+        }
+    </script>
+
+}

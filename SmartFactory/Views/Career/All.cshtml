@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CareerAllModel>
+
+
+@{
+    ViewBag.Title = "Отворени позиции в Умната Фабрика";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+
+
+@if (Model.Count() == 0)
+{
+
+    <div class="mt-4 p-5 bg-light">
+        <h1 class="display-4">НЯМА НОВИ ОТВОРЕНИ ПОЗИЦИИ</h1>
+        <p class="lead">
+            Към @DateOnly.FromDateTime(DateTime.Today) няма нови отворени позиции!
+        </p>
+        
+    </div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-center">
+                <th width="98" scope="col">Дата на публикуване  </th>
+                <th scope="col">Длъжност</th>
+                <th scope="col">Обявата е валидна до</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var career in Model)
+            {
+                <tr>
+
+                    <td scope="row">@career.DateOpen</td>
+                    <td class="text-center">@career.Position</td>
+                    <td class="text-center">@career.DateClose</td>
+                    <td><a asp-controller="Career" asp-action="Apply" asp-route-id="@career.Id"
+               class="btn btn-success">Кандидатствай</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

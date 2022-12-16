@@ -1,4 +1,5 @@
-﻿using SmartFactory.Core.Contracts;
+﻿using SmartFactory.Controllers;
+using SmartFactory.Core.Contracts;
 using SmartFactory.Core.Services;
 using SmartFactory.Infrastructure.Data.Common;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductionService, ProductionService>();
             services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<ICareerService, CareerService>();
+            services.AddScoped<IShiftService, ShiftService>();
 
             return services;
         }

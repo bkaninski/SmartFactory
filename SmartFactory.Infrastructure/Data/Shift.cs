@@ -37,6 +37,5 @@ namespace SmartFactory.Infrastructure.Data
         [ForeignKey(nameof(OperatorPackagingId))]
         public Employee OperatorPackaging { get; set; } = null!;
 
-        public bool InWork { get; set; } = false;
     }
 }

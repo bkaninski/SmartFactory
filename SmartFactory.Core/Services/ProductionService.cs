@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactory.Core.Contracts;
+using SmartFactory.Core.Models.Employee;
 using SmartFactory.Core.Models.Production;
 using SmartFactory.Infrastructure.Data;
 using SmartFactory.Infrastructure.Data.Common;
@@ -20,9 +21,35 @@ namespace SmartFactory.Core.Services
             repo = _repo;
         }
 
+
+
+        public async Task Create(ProductionViewModel model)
+        {
+            var production = new Production()
+            {
+               Date = model.Date,
+               ShiftId=model.ShiftId,
+               TypeOfShift=model.TypeOfShift,               
+               ProductionPreparation=model.ProductionPreparation,
+               ProcuctionPackaging = model.ProcuctionPackaging,
+               Coment = model.ComentDetails?.Substring(0,10),
+               ComentDetails = model.ComentDetails,
+               HasBeenReported = true,
+               AfterShiftBufer=model.AfterShiftBufer
+            };
+
+
+            await repo.AddAsync(production);
+            await repo.SaveChangesAsync();
+
+        }
+
         public async Task<IEnumerable<LastWeekProductionQueryModel>> LastWeekProduction()
         {
+            var dateWeekAgo = DateTime.UtcNow.Date.AddDays(-7);
+
             return await repo.AllReadonly<Production>()
+                .Where(p=>p.Date>dateWeekAgo)
                 .OrderByDescending(p=>p.Id)
                 .Take(14)
                 .Select(p=> new LastWeekProductionQueryModel() 
@@ -34,9 +61,43 @@ namespace SmartFactory.Core.Services
                     StockBeforePacking = p.StockBeforePacking,
                     ProductionPackaging= p.ProcuctionPackaging,
                     Coment=p.Coment==null?"Няма коментар за смяната":p.Coment,
+                    StockBeforePackingAfter = p.AfterShiftBufer
                 })
                 
                 .ToListAsync();
         }
+
+        public async Task<int> StockBeforePack()
+        {
+            return await repo.AllReadonly<Production>()
+                .OrderByDescending(p => p.Id)
+                .Take(1)
+                .Select(p => p.AfterShiftBufer)
+                .FirstAsync();
+
+
+                
+        }
+
+        public async Task<ProductionViewModel> View(int shiftId)
+        {
+            return await repo.AllReadonly<Shift>()
+                .Where(s => s.Id == shiftId)
+                .Include(e=>e.Electrician)
+                .Include(e => e.OperatorPackaging)
+                .Include(e => e.OperatorPreparation)
+                .Select(s => new ProductionViewModel()
+                {
+                    Date=s.Date,
+                    ShiftId=s.Id,
+                    TypeOfShift = s.TypeOfShift,
+                    Electrical = String.Concat(s.Electrician.FirstName, " ", s.Electrician.LastName),
+                    OperatorPackaging = String.Concat(s.OperatorPackaging.FirstName, " ", s.OperatorPackaging.LastName),
+                    OperatorPreparation = String.Concat(s.OperatorPreparation.FirstName, " ", s.OperatorPreparation.LastName),
+                })
+                .FirstAsync();
+        }
+
+
     }
 }

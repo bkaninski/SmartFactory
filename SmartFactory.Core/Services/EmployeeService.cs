@@ -2,14 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SmartFactory.Core.Contracts;
 using SmartFactory.Core.Models.Employee;
-using SmartFactory.Core.Models.Position;
 using SmartFactory.Infrastructure.Data;
 using SmartFactory.Infrastructure.Data.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactory.Core.Services
 {
@@ -70,6 +64,50 @@ namespace SmartFactory.Core.Services
             return result;
         }
 
+        public async Task<IEnumerable<ElectricalModel>> AllElectrical()
+        {
+            return await repo.AllReadonly<Employee>()
+                .Where(e=>e.PositionId==3)
+                .Where(e=>e.IsQuits==false)
+               .OrderBy(e => e.Id)
+               .Select(e => new ElectricalModel()
+               {
+                   Id = e.Id,
+                   FirstName = e.FirstName,
+                   LastName = e.LastName
+               })
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<OperatorPackModel>> AllOperatorPack()
+        {
+            return await repo.AllReadonly<Employee>()
+            .Where(e => e.PositionId == 5)
+            .Where(e => e.IsQuits==false)
+           .OrderBy(e => e.Id)
+           .Select(e => new OperatorPackModel()
+           {
+               Id = e.Id,
+               FirstName = e.FirstName,
+               LastName = e.LastName
+           })
+           .ToListAsync();
+        }
+
+        public async Task<IEnumerable<OperatorPreModel>> AllOperatorPre()
+        {
+            return await repo.AllReadonly<Employee>()
+           .Where(e => e.PositionId == 4)
+           .Where(e => e.IsQuits == false)
+          .OrderBy(e => e.Id)
+          .Select(e => new OperatorPreModel()
+          {
+              Id = e.Id,
+              FirstName = e.FirstName,
+              LastName = e.LastName
+          })
+          .ToListAsync();
+        }
 
         public async Task<int> Create(string userId, EmployeeAddModel model)
         {

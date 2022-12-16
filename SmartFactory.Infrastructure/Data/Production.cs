@@ -32,7 +32,12 @@ namespace SmartFactory.Infrastructure.Data
         [Required]
         public int ProcuctionPackaging { get; set; }
 
+        [Required]
+
+        public int AfterShiftBufer { get; set; }
+
         public string? Coment { get; set; }
+        public string? ComentDetails { get; set; }
 
         public bool HasBeenReported { get; set; } = false;
     }

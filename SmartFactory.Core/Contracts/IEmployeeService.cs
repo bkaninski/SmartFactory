@@ -30,5 +30,11 @@ namespace SmartFactory.Core.Contracts
 
         Task<int> GetEmployeePositionId(int employeeId);
 
+        Task<IEnumerable<ElectricalModel>> AllElectrical();
+        Task<IEnumerable<OperatorPackModel>> AllOperatorPack();
+        Task<IEnumerable<OperatorPreModel>> AllOperatorPre();
+
+
+
     }
 }

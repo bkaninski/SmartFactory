@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/toastr/toastr.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmartFactory.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 </head>
 <body>
     <partial name="_UserMessages">
@@ -26,36 +28,74 @@
                         </li>
                         @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
                         {
-                           
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="All">Персонал</a>
-                            </li>
-                             <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="btn text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Персонал
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="All">Всички служители</a>
+                                        </li>
+                                        <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="AddEmployee">Добавяне на служител</a>
                             </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Position" asp-action="All">Длъжности</a>
-                                </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Position" asp-action="AddPosition">Добавяне на длъжност</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Shift" asp-action="Calendar">График</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Shift" asp-action="AddShift">Добавяне на смяна</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="LastWeekProduction">Продукция</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="CurrentShift">Текуща смяна</a>
-                            </li>
+                                        
+                                    </ul>
+                                </div>
 
+                                <div class="dropdown">
+                                    <a class="btn text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Длъжности
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Position" asp-action="All">Всички длъжности</a>
+                                </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Position" asp-action="AddPosition">Добавяне на длъжност</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="dropdown">
+                                    <a class="btn text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Организация на работата
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Shift" asp-action="Calendar">График</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Shift" asp-action="AddShift">Добавяне на смяна</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="dropdown">
+                                    <a class="btn text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                       Продукция
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="LastWeekProduction">Данни за последна седмица</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="CurrentShift">Текуща смяна</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                
+                            
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Careers" asp-action="All">Кариери</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Career" asp-action="All">Кариери</a>
                         </li>
 
                     </ul>
@@ -75,7 +115,7 @@
             &copy; @DateTime.UtcNow.Year - Умната Фабрика - 
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

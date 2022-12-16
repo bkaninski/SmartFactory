@@ -23,7 +23,7 @@ namespace SmartFactory.Core.Models.Production
 
         public int ProductionPackaging { get; set; }
 
-        public int StockBeforePackingAfter { get=>(ProductionPreparation+StockBeforePacking)-ProductionPackaging;}
+        public int StockBeforePackingAfter { get; set; }
 
         public string? Coment { get; set; }
     }
