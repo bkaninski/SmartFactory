@@ -13,6 +13,7 @@ namespace SmartFactory.Core.Contracts
     {
         Task<string> CreateUser(string email);
 
+        Task UpdateUser(string userId, int positionId);
         Task<int> Create(string userId,EmployeeAddModel model);
 
         Task<EmployeeQueryModel> All(
@@ -34,7 +35,7 @@ namespace SmartFactory.Core.Contracts
         Task<IEnumerable<OperatorPackModel>> AllOperatorPack();
         Task<IEnumerable<OperatorPreModel>> AllOperatorPre();
 
-
+        Task<int> GetEmployeeId(string userId);
 
     }
 }

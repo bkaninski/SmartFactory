@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using SmartFactory.Extensions;
 using SmartFactory.Infrastructure.Data;
 using SmartFactory.ModelBinders;
 
@@ -21,6 +22,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:RequireNonAlphanumeric");
 
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
@@ -31,6 +33,7 @@ builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -40,6 +43,7 @@ else
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

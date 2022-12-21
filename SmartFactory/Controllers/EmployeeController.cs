@@ -35,6 +35,7 @@ namespace SmartFactory.Controllers
             return View(query);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpGet]
         public async Task< IActionResult> AddEmployee()
         {
@@ -47,6 +48,7 @@ namespace SmartFactory.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpPost]
         public async Task<IActionResult> AddEmployee(EmployeeAddModel model)
         {
@@ -55,27 +57,34 @@ namespace SmartFactory.Controllers
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
 
             }
-
-            string userId = await employeeService.CreateUser(model.Email);
-
-            if (userId!=null)
+            try
             {
-                model.UserId = userId;
+                string userId = await employeeService.CreateUser(model.Email);
+                if (userId != null)
+                {
+                    model.UserId = userId;
+                }
             }
+            catch (Exception ex)
+            {
 
+                ModelState.AddModelError(nameof(model.Email),ex.Message);
+               
+            }
            
 
-            //if (!ModelState.IsValid)
-            //{
-            //    model.Positions = await employeeService.AllPositions();
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                model.Positions = await positionService.AllPositions();
+                return View(model);
+            }
 
-            int id = await employeeService.Create(userId, model);
+            int id = await employeeService.Create(model.UserId, model);
 
             return RedirectToAction(nameof(Details), new {id});
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -103,6 +112,7 @@ namespace SmartFactory.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpPost]
         public async Task<IActionResult> Edit(EmployeeEditModel model)
         {

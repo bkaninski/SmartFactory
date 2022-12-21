@@ -84,9 +84,20 @@
                                         <li class="nav-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="LastWeekProduction">Данни за последна седмица</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="CurrentShift">Текуща смяна</a>
-                                        </li>
+
+                                        @if (User.IsInRole("Operator"))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="AddProduction">Текуща смяна</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Production" asp-action="CurrentShift">Текуща смяна</a>
+                                            </li>
+                                        }
+                                        
 
                                     </ul>
                                 </div>

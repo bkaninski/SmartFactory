@@ -16,5 +16,7 @@ namespace SmartFactory.Core.Contracts
         Task Create(ProductionViewModel model);
 
         Task<int> StockBeforePack();
+
+        Task AddProduction(ProductionViewModel model);
     }
 }

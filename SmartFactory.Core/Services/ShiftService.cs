@@ -75,17 +75,17 @@ namespace SmartFactory.Core.Services
                 date = date + time;
                 model.Date = date;
             }
+
             var shift = new Shift()
-           {
+            {
 
-               Date =  model.Date,
-               TypeOfShift = model.TypeOfShift,
-               ElectricianId=model.ElectricianId,
-               OperatorPreparationId =model.OperatorPreparationId,
-               OperatorPackagingId = model.OperatorPackagingId,
+                Date = model.Date,
+                TypeOfShift = model.TypeOfShift,
+                ElectricianId = model.ElectricianId,
+                OperatorPreparationId = model.OperatorPreparationId,
+                OperatorPackagingId = model.OperatorPackagingId,
 
-           };
-
+            };
 
             await repo.AddAsync(shift);
             await repo.SaveChangesAsync();
@@ -111,6 +111,24 @@ namespace SmartFactory.Core.Services
                 .AnyAsync(e => e.Id == id);
         }
 
+        public async Task<bool> InWorkToday(int employeeId, DateTime date)
+        {
+            var shiftToday = await repo.AllReadonly<Shift>()
+                .Where(s => s.Date.Year == date.Year)
+                .Where(s=>s.Date.Month==date.Month)
+                .Where(s=>s.Date.Day==date.Day)
+                .Select(s=> new Shift()
+                {
+                    Date= s.Date,
+                    ElectricianId =s.ElectricianId,
+                    OperatorPackagingId = s.OperatorPackagingId,
+                    OperatorPreparationId = s.OperatorPreparationId
+                })
+                .ToListAsync();
+
+            return shiftToday.Any(e => e.ElectricianId == employeeId || e.OperatorPackagingId == employeeId || e.OperatorPreparationId == employeeId);
+        }
+
         public async Task<ShiftEditModel> ShiftDetailsById(int id)
         {
             return await repo.AllReadonly<Shift>()
@@ -128,9 +146,24 @@ namespace SmartFactory.Core.Services
                  .FirstAsync();
         }
 
-  
+        public async Task<bool> ShiftExistByDateAndType(DateTime date, string type)
+        {
+            var shiftToday = await repo.AllReadonly<Shift>()
+               .Where(s => s.Date.Year == date.Year)
+               .Where(s => s.Date.Month == date.Month)
+               .Where(s => s.Date.Day == date.Day)
+               .Select(s => new Shift()
+               {
+                   Date = s.Date,
+                   TypeOfShift = s.TypeOfShift
+                   
+               })
+               .ToListAsync();
 
-        public async Task<int?> ShiftInWork()
+            return shiftToday.Any(e => e.TypeOfShift.ToString() == type);
+        }
+
+        public async Task<int?> ShiftInWorkId()
         {
             var hour = DateTime.Now.Hour;
             if (hour>=6 && hour<14)
@@ -158,6 +191,22 @@ namespace SmartFactory.Core.Services
 
 
           
+        }
+
+        public async Task<Shift> ShiftInWork(int shiftId)
+        {
+            return await repo.AllReadonly<Shift>()
+                .Where(s => s.Id == shiftId)
+                .Select(s => new Shift()
+                {
+                    Id=s.Id,
+                    Date=s.Date,
+                    TypeOfShift=s.TypeOfShift,
+                    ElectricianId=s.ElectricianId,
+                    OperatorPackagingId=s.OperatorPackagingId,
+                    OperatorPreparationId=s.OperatorPreparationId
+                })
+                .FirstAsync();
         }
     }
 }

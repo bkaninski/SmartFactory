@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartFactory.Core.Constans;
 using SmartFactory.Core.Contracts;
 using SmartFactory.Core.Models.Employee;
 using SmartFactory.Core.Models.Position;
@@ -30,6 +31,7 @@ namespace SmartFactory.Controllers
             return View(positions);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpGet]
         public async Task<IActionResult> AddPosition()
         {
@@ -38,6 +40,7 @@ namespace SmartFactory.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpPost]
         public async Task<IActionResult> AddPosition(PositionQueryModel model)
         {
@@ -58,11 +61,13 @@ namespace SmartFactory.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             if ((await positionService.PositionExistsById(id)) == false)
             {
+                TempData[MessageConstant.ErrorMessage] = "Няма длъжност с такъв идентификатор!";
                 return RedirectToAction(nameof(All));
             }
 
@@ -79,6 +84,7 @@ namespace SmartFactory.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "factoryManager")]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, PositionEditModel model)
         {

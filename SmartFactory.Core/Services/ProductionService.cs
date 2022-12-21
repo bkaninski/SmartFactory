@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using SmartFactory.Core.Contracts;
 using SmartFactory.Core.Models.Employee;
 using SmartFactory.Core.Models.Production;
@@ -21,7 +22,57 @@ namespace SmartFactory.Core.Services
             repo = _repo;
         }
 
+        public async Task AddProduction(ProductionViewModel model)
+        {
+            int productionId = await repo.AllReadonly<Production>()
+                .Where(p => p.ShiftId == model.ShiftId)
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
 
+            
+
+            if (productionId == null)
+            {
+                var production = new Production()
+                {
+                    Date = model.Date,
+                    ShiftId = model.ShiftId,
+                    TypeOfShift = model.TypeOfShift,
+                    ProductionPreparation = model.ProductionPreparation,
+                    ProcuctionPackaging = model.ProcuctionPackaging,
+                    Coment = model.ComentDetails?.Substring(0, 10),
+                    ComentDetails = model.ComentDetails,
+                    HasBeenReported = false,
+                    AfterShiftBufer = model.AfterShiftBufer
+                };
+
+                if (model.TypeOfShift.ToString() == "Early")
+                {
+                    TimeSpan time = new TimeSpan(6, 0, 0);
+                    DateTime date = model.Date;
+                    date = date + time;
+                    production.Date = date;
+                }
+                else
+                {
+                    TimeSpan time = new TimeSpan(14, 0, 0);
+                    DateTime date = model.Date;
+                    date = date + time;
+                    production.Date = date;
+                }
+                await repo.AddAsync(production);
+                await repo.SaveChangesAsync();
+            }
+            var existShiftProduction = await repo.GetByIdAsync<Production>(productionId);
+            existShiftProduction.ProductionPreparation = model.ProductionPreparation;
+            existShiftProduction.ProcuctionPackaging = model.ProcuctionPackaging;
+            existShiftProduction.AfterShiftBufer = model.AfterShiftBufer;
+
+           await repo.SaveChangesAsync();
+
+        }
+
+      
 
         public async Task Create(ProductionViewModel model)
         {
@@ -37,6 +88,20 @@ namespace SmartFactory.Core.Services
                HasBeenReported = true,
                AfterShiftBufer=model.AfterShiftBufer
             };
+            if (model.TypeOfShift.ToString() == "Early")
+            {
+                TimeSpan time = new TimeSpan(6, 0, 0);
+                DateTime date = model.Date;
+                date = date + time;
+                production.Date = date;
+            }
+            else
+            {
+                TimeSpan time = new TimeSpan(14, 0, 0);
+                DateTime date = model.Date;
+                date = date + time;
+                production.Date = date;
+            }
 
 
             await repo.AddAsync(production);
@@ -50,6 +115,7 @@ namespace SmartFactory.Core.Services
 
             return await repo.AllReadonly<Production>()
                 .Where(p=>p.Date>dateWeekAgo)
+                .Where(p=>p.HasBeenReported==true)
                 .OrderByDescending(p=>p.Id)
                 .Take(14)
                 .Select(p=> new LastWeekProductionQueryModel() 
@@ -81,7 +147,7 @@ namespace SmartFactory.Core.Services
 
         public async Task<ProductionViewModel> View(int shiftId)
         {
-            return await repo.AllReadonly<Shift>()
+            var model= await repo.AllReadonly<Shift>()
                 .Where(s => s.Id == shiftId)
                 .Include(e=>e.Electrician)
                 .Include(e => e.OperatorPackaging)
@@ -96,6 +162,30 @@ namespace SmartFactory.Core.Services
                     OperatorPreparation = String.Concat(s.OperatorPreparation.FirstName, " ", s.OperatorPreparation.LastName),
                 })
                 .FirstAsync();
+
+            var productionShift = await repo.AllReadonly<Production>()
+                .Where(p=>p.Date.Year==DateTime.Now.Year)
+                .Where(p=>p.Date.Month==DateTime.Now.Month)
+                .Where(p=>p.Date.Day==DateTime.Now.Day)
+                .Where(p=>p.TypeOfShift==model.TypeOfShift)
+                .Select(s => new ProductionViewModel()
+                {
+                    ProcuctionPackaging=s.ProcuctionPackaging,
+                    ProductionPreparation=s.ProductionPreparation,
+                    ComentDetails=s.ComentDetails,
+                    AfterShiftBufer=s.AfterShiftBufer
+                })
+                .FirstOrDefaultAsync();
+
+            if (productionShift!=null)
+            {
+                model.ProductionPreparation = productionShift.ProductionPreparation;
+                model.ProcuctionPackaging = productionShift.ProcuctionPackaging;
+                model.ComentDetails = productionShift.ComentDetails;
+                model.AfterShiftBufer = productionShift.AfterShiftBufer;
+            }
+
+            return model;
         }
 
 

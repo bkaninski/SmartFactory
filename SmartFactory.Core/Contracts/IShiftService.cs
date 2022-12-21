@@ -2,6 +2,7 @@
 using SmartFactory.Core.Models.Position;
 using SmartFactory.Core.Models.Production;
 using SmartFactory.Core.Models.Shift;
+using SmartFactory.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,12 @@ namespace SmartFactory.Core.Contracts
         Task<bool> Exists(int id);
         Task<ShiftEditModel> ShiftDetailsById(int id);
 
-        Task<int?> ShiftInWork();
+        Task<int?> ShiftInWorkId();
+        Task<Shift> ShiftInWork(int shiftId);
+
+        Task<bool> InWorkToday(int employeeId,DateTime date);
+
+        Task<bool> ShiftExistByDateAndType(DateTime date, string type);
+
     }
 }

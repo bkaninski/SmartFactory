@@ -10,10 +10,14 @@ namespace SmartFactory.Core.Services
     public class EmployeeService :IEmployeeService
     {
         private readonly IRepository repo;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public EmployeeService(IRepository _repo)
+        public EmployeeService(
+            IRepository _repo,
+            UserManager<IdentityUser> _userManager)
         {
             repo = _repo;
+            userManager = _userManager;
         }
 
         public async Task<EmployeeQueryModel> All(string? position = null, string? searchTerm = null, EmployeeSorting sorting = EmployeeSorting.Длъжност)
@@ -122,7 +126,7 @@ namespace SmartFactory.Core.Services
                 Salary=model.Salary
             };
 
-            
+            await UpdateUser(userId, model.PositionId);
             await repo.AddAsync(employee);
             await repo.SaveChangesAsync();
 
@@ -131,6 +135,11 @@ namespace SmartFactory.Core.Services
 
         public async Task<string> CreateUser(string email)
         {
+            if (await userManager.FindByEmailAsync(email)!=null)
+            {
+                throw new Exception("Вече има такъв потребител");
+            }
+
             var user = new IdentityUser()
             {
                 UserName = email,
@@ -154,6 +163,10 @@ namespace SmartFactory.Core.Services
             employee.Address = model.Address;
             employee.PositionId = model.PositionId;
             employee.Salary = model.Salary;
+
+            string userId = employee.UserId;
+
+            await UpdateUser(userId, model.PositionId);
 
             await repo.SaveChangesAsync();
         }
@@ -182,6 +195,15 @@ namespace SmartFactory.Core.Services
                 .AnyAsync(e => e.Id == id);
         }
 
+        public async Task<int> GetEmployeeId(string userId)
+        {
+            return  await repo.AllReadonly<Employee>()
+                 .Where(e => e.UserId == userId)
+                 .Select(e => e.Id)
+                 .FirstAsync();
+           
+        }
+
         public async Task<int> GetEmployeePositionId(int employeeId)
         {
             var result = await repo.AllReadonly<Employee>()
@@ -197,5 +219,32 @@ namespace SmartFactory.Core.Services
             return await repo.AllReadonly<Position>()
                 .AnyAsync(p => p.Id == positionId);
         }
+
+        public async Task UpdateUser(string userId, int positionId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+
+            if (positionId == 1)
+            {
+               await userManager.AddToRoleAsync(user, "factoryManager");
+            }
+            else if (positionId == 2)
+            {
+                await userManager.AddToRoleAsync(user, "Manager");
+
+            }
+            else if (positionId == 3)
+            {
+                await userManager.AddToRoleAsync(user, "Electrical");
+
+            }
+            else if (positionId == 4)
+            {
+                await userManager.AddToRoleAsync(user, "Operator");
+            }
+        }
+
+     
     }
 }

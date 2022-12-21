@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Текуща смяна";
+    ViewBag.Title = "Текуща смяна za operatori";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -41,7 +41,7 @@ else
                 </div>
                 <div class="form-group">
                     <label asp-for="TypeOfShift">Смяна</label>
-                    <input asp-for="TypeOfShift"  class="form-control" placeholder="Смяна" readonly>
+                    <input asp-for="TypeOfShift" class="form-control" placeholder="Смяна" readonly>
                     <span asp-validation-for="TypeOfShift" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -56,7 +56,7 @@ else
                 </div>
                 <div class="form-group">
                     <label asp-for="ProductionPreparation">Продукция станция подготовка</label>
-                    <input asp-for="ProductionPreparation" onblur="findTotal()" id="pordPre"  class="form-control" placeholder="Продукция станция подготовка" readonly>
+                    <input asp-for="ProductionPreparation" onblur="findTotal()" id="pordPre"  class="form-control" placeholder="Продукция станция подготовка">
                     <span asp-validation-for="ProductionPreparation" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -66,7 +66,7 @@ else
                 </div>
                 <div class="form-group">
                     <label asp-for="ProcuctionPackaging">Продукция станция пакетиране</label>
-                    <input asp-for="ProcuctionPackaging" onblur="findTotal()" id="prodPack" class="form-control" placeholder="Продукция станция пакетиране" readonly>
+                    <input asp-for="ProcuctionPackaging" onblur="findTotal()" id="prodPack" class="form-control" placeholder="Продукция станция пакетиране" >
                     <span asp-validation-for="ProcuctionPackaging" class="small text-danger"></span>
                 </div>
                   <div class="form-group">
@@ -76,13 +76,11 @@ else
                
                 <div class="form-group">
                     <label asp-for="AfterShiftBufer">Буфер в края на смяната</label>
-                    <input asp-for="AfterShiftBufer" id="total" class="form-control" placeholder="Буфер в края на смяната" readonly>
+                    <input asp-for="AfterShiftBufer" id="total" class="form-control" placeholder="Буфер в края на смяната" readonly >
                     <span asp-validation-for="AfterShiftBufer" class="small text-danger"></span>
                 </div>
-
-                    @Html.TextAreaFor(model => model.ComentDetails, 10, 40, null);
                 <div class="text-center">
-                    <input class="btn btn-primary mt-3" type="submit" value="Рапортуване" />
+                    <input class="btn btn-primary mt-3" type="submit" value="Запис" />
                 </div>
             </form>
         </div>

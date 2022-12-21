@@ -22,11 +22,12 @@ namespace SmartFactory.Infrastructure.Data
             builder.ApplyConfiguration(new ProductionConfiguration());
             builder.ApplyConfiguration(new LeaveConfiguration());
             builder.ApplyConfiguration(new CareerConfiguration());
-
+            builder.ApplyConfiguration(new RolesConfiguration());
+            builder.ApplyConfiguration(new UsersRoleConfiguration());
+            
 
             base.OnModelCreating(builder);
         }
-
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Position> Positions { get; set; }
