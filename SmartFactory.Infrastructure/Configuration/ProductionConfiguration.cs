@@ -13,7 +13,7 @@ namespace SmartFactory.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Production> builder)
         {
-            builder.HasData(CreateProductions());
+            //builder.HasData(CreateProductions());
         }
 
         private List<Production> CreateProductions()

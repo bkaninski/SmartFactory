@@ -97,10 +97,27 @@ namespace SmartFactory.Core.Services
         {
             var shift = await repo.GetByIdAsync<Shift>(shiftId);
 
+            if (model.TypeOfShift.ToString() == "Early")
+            {
+                TimeSpan time = new TimeSpan(6, 0, 0);
+                DateTime date = model.Date;
+                date = date + time;
+                model.Date = date;
+            }
+            else
+            {
+                TimeSpan time = new TimeSpan(14, 0, 0);
+                DateTime date = model.Date;
+                date = date + time;
+                model.Date = date;
+            }
+
+            shift.Date = model.Date;
             shift.TypeOfShift = model.TypeOfShift;
             shift.ElectricianId = model.ElectricianId;
             shift.OperatorPackagingId = model.OperatorPackagingId;
             shift.OperatorPreparationId = model.OperatorPreparationId;
+
 
             await repo.SaveChangesAsync();
         }

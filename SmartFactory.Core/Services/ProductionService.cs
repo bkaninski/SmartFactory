@@ -31,37 +31,11 @@ namespace SmartFactory.Core.Services
 
             
 
-            if (productionId == null)
+            if (productionId == 0)
             {
-                var production = new Production()
-                {
-                    Date = model.Date,
-                    ShiftId = model.ShiftId,
-                    TypeOfShift = model.TypeOfShift,
-                    ProductionPreparation = model.ProductionPreparation,
-                    ProcuctionPackaging = model.ProcuctionPackaging,
-                    Coment = model.ComentDetails?.Substring(0, 10),
-                    ComentDetails = model.ComentDetails,
-                    HasBeenReported = false,
-                    AfterShiftBufer = model.AfterShiftBufer
-                };
+                Create(model);
 
-                if (model.TypeOfShift.ToString() == "Early")
-                {
-                    TimeSpan time = new TimeSpan(6, 0, 0);
-                    DateTime date = model.Date;
-                    date = date + time;
-                    production.Date = date;
-                }
-                else
-                {
-                    TimeSpan time = new TimeSpan(14, 0, 0);
-                    DateTime date = model.Date;
-                    date = date + time;
-                    production.Date = date;
-                }
-                await repo.AddAsync(production);
-                await repo.SaveChangesAsync();
+                return;
             }
             var existShiftProduction = await repo.GetByIdAsync<Production>(productionId);
             existShiftProduction.ProductionPreparation = model.ProductionPreparation;

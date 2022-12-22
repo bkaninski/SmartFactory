@@ -7,7 +7,7 @@ namespace SmartFactory.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Position> builder)
         {
-            builder.HasData(CreatePostions());
+            //builder.HasData(CreatePostions());
         }
 
         private List<Position> CreatePostions()

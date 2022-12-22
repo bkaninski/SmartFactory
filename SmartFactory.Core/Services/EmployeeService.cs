@@ -53,6 +53,7 @@ namespace SmartFactory.Core.Services
             };
 
             result.Employees = await employes
+                .Where(e=>e.IsQuits!=true)
                 .Select(e => new EmployeeServiceModel()
                 {
                     Id=e.Id,
@@ -212,12 +213,6 @@ namespace SmartFactory.Core.Services
                 .FirstAsync();
             return result.Value;
                 
-        }
-
-        public async Task<bool> PositionExists(int positionId)
-        {
-            return await repo.AllReadonly<Position>()
-                .AnyAsync(p => p.Id == positionId);
         }
 
         public async Task UpdateUser(string userId, int positionId)

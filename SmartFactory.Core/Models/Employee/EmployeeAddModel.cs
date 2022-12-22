@@ -46,7 +46,7 @@ namespace SmartFactory.Core.Models.Employee
 
         [Required]
         [Display(Name = "Заплата")]
-        [Range(820.00,20000.00,ErrorMessage ="Заплатата трябва да бъде положително число по-голямо от {2} лева")]
+        [Range(820.00,20000.00,ErrorMessage ="Заплатата трябва да бъде положително число по-голямо от {1} лева")]
         public decimal Salary { get; set; }
     }
 }

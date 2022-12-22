@@ -8,7 +8,7 @@ namespace SmartFactory.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Shift> builder)
         {
-            builder.HasData(CreateShifts());
+           // builder.HasData(CreateShifts());
         }
 
         private List<Shift> CreateShifts()

@@ -19,11 +19,9 @@
                 {
                     <a class="btn btn-warning" asp-controller="Position" asp-action="Edit"
                    asp-route-id="@Model.Id">Промяна</a>
-                   <form class="ml-2" asp-controller="Position" asp-action="Delete"
-                      asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Изтриване" />
-                        </form>
-                    
+                    <a class="btn btn-danger" asp-controller="Position" asp-action="Delete"
+                   asp-route-id="@Model.Id">Изтриване</a>
+
                 }
             </div>
            
