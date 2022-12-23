@@ -114,7 +114,7 @@ namespace SmartFactory.Core.Services
           .ToListAsync();
         }
 
-        public async Task<int> Create(string userId, EmployeeAddModel model)
+        public async Task<int> Create(string userId, EmployeeAddModel model, int positionType)
         {
             var employee = new Employee()
             {
@@ -127,7 +127,7 @@ namespace SmartFactory.Core.Services
                 Salary=model.Salary
             };
 
-            await UpdateUser(userId, model.PositionId);
+            await UpdateUser(userId, positionType);
             await repo.AddAsync(employee);
             await repo.SaveChangesAsync();
 
@@ -157,17 +157,19 @@ namespace SmartFactory.Core.Services
             return user.Id;
         }
 
-        public async Task Edit(int employeeId, EmployeeEditModel model)
+        public async Task Edit(int employeeId, EmployeeEditModel model, int positionType)
         {
             var employee = await repo.GetByIdAsync<Employee>(employeeId);
 
+            employee.Age = model.Age;
             employee.Address = model.Address;
             employee.PositionId = model.PositionId;
             employee.Salary = model.Salary;
 
             string userId = employee.UserId;
 
-            await UpdateUser(userId, model.PositionId);
+
+            await UpdateUser(userId, positionType);
 
             await repo.SaveChangesAsync();
         }
@@ -215,26 +217,26 @@ namespace SmartFactory.Core.Services
                 
         }
 
-        public async Task UpdateUser(string userId, int positionId)
+        public async Task UpdateUser(string userId, int positionType)
         {
             var user = await userManager.FindByIdAsync(userId);
 
 
-            if (positionId == 1)
+            if (positionType == 0)
             {
                await userManager.AddToRoleAsync(user, "factoryManager");
             }
-            else if (positionId == 2)
+            else if (positionType == 1)
             {
                 await userManager.AddToRoleAsync(user, "Manager");
 
             }
-            else if (positionId == 3)
+            else if (positionType == 2)
             {
                 await userManager.AddToRoleAsync(user, "Electrical");
 
             }
-            else if (positionId == 4)
+            else if (positionType == 3)
             {
                 await userManager.AddToRoleAsync(user, "Operator");
             }

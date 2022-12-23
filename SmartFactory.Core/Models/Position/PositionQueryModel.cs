@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartFactory.Infrastructure.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +19,9 @@ namespace SmartFactory.Core.Models.Position
         [StringLength(5000, MinimumLength =5)]
         [Display(Name = "Описание")]
         public string Description { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Тип на длъжността")]
+        public PositionType PositionType { get; set; }
     }
 }

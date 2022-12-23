@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartFactory.Core.Constans;
 using SmartFactory.Core.Contracts;
 using SmartFactory.Core.Models.Employee;
+using SmartFactory.Infrastructure.Data;
 
 namespace SmartFactory.Controllers
 {
@@ -55,6 +57,7 @@ namespace SmartFactory.Controllers
             if (await positionService.PositionExistsById(model.PositionId)==false)
             {
                 ModelState.AddModelError(nameof(model.PositionId), "Длъжността не съществува!");
+                TempData[MessageConstant.ErrorMessage] = "Длъжността не съществува!";
 
             }
             try
@@ -69,17 +72,21 @@ namespace SmartFactory.Controllers
             {
 
                 ModelState.AddModelError(nameof(model.Email),ex.Message);
-               
-            }
-           
-
-            if (!ModelState.IsValid)
-            {
-                model.Positions = await positionService.AllPositions();
+                TempData[MessageConstant.ErrorMessage] = ex.Message;
+                model = new EmployeeAddModel()
+                {
+                    Positions = await positionService.AllPositions()
+                };
                 return View(model);
+
             }
 
-            int id = await employeeService.Create(model.UserId, model);
+
+            var position = await positionService.PositionDetailsById(model.PositionId);
+
+            int id = await employeeService.Create(model.UserId, model,(int)position.PositionType);
+
+            TempData[MessageConstant.SuccessMessage] = "Служителя е добавен";
 
             return RedirectToAction(nameof(Details), new {id});
         }
@@ -139,7 +146,10 @@ namespace SmartFactory.Controllers
                 return View(model);
             }
 
-            await employeeService.Edit(model.Id, model);
+            var position = await positionService.PositionDetailsById(model.PositionId);
+
+
+            await employeeService.Edit(model.Id, model,(int)position.PositionType);
 
             return RedirectToAction(nameof(Details), new { model.Id });
 

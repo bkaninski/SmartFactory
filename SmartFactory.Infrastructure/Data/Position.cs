@@ -25,6 +25,8 @@ namespace SmartFactory.Infrastructure.Data
         [StringLength(5000)]
         public string Description { get; set; } = null!;
 
+        public PositionType PositionType { get; set; }
+
         public List<Employee> Employees { get; set; }
     }
 }

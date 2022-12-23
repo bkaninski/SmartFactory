@@ -14,7 +14,7 @@ namespace SmartFactory.Core.Contracts
         Task<string> CreateUser(string email);
 
         Task UpdateUser(string userId, int positionId);
-        Task<int> Create(string userId,EmployeeAddModel model);
+        Task<int> Create(string userId,EmployeeAddModel model, int positionType);
 
         Task<EmployeeQueryModel> All(
             string? position=null,
@@ -27,7 +27,7 @@ namespace SmartFactory.Core.Contracts
 
         Task<bool> Exists(int id);
 
-        Task Edit(int employeeId,EmployeeEditModel model);
+        Task Edit(int employeeId,EmployeeEditModel model, int positionType);
 
         Task<int> GetEmployeePositionId(int employeeId);
 

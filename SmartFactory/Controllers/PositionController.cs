@@ -77,7 +77,8 @@ namespace SmartFactory.Controllers
             {
                 Id = position.Id,
                 Title = position.Title,
-                Description = position.Description
+                Description = position.Description,
+               PositionType = position.PositionType
                
             };
 

@@ -48,7 +48,8 @@ namespace SmartFactory.Core.Services
             var position = new Position()
             {
                Title=model.Title,
-               Description = model.Description
+               Description = model.Description,
+               PositionType = model.PositionType
             };
 
 
@@ -64,6 +65,7 @@ namespace SmartFactory.Core.Services
 
             position.Title = model.Title;
             position.Description = model.Description;
+            position.PositionType = model.PositionType;
 
             await repo.SaveChangesAsync();
         }
@@ -76,8 +78,9 @@ namespace SmartFactory.Core.Services
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    Description = p.Description
-
+                    Description = p.Description,
+                    PositionType = p.PositionType
+                    
                 })
                 .FirstAsync();
         }

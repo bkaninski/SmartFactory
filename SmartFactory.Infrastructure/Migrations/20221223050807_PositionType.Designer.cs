@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartFactory.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SmartFactory.Infrastructure.Data;
 namespace SmartFactory.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221223050807_PositionType")]
+    partial class PositionType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,15 +175,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9bd9bd80-ebf8-4278-8c41-da344869f298",
+                            ConcurrencyStamp = "573218a9-92c8-4170-88ba-d801f7344ce6",
                             Email = "factoryManager@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "factoryManager@mail.com",
                             NormalizedUserName = "factoryManager@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEABTddQXo6MHUQTu/ljDvieSBXeGQfRBvbVYb2V6RzurZQp1gNXu5DI/wieYQIYVOg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPskH0YkNBnk4jlxBJPfruutPntZBe5q6f9laoBkCEEfRCPjwTFBU2j41Bxu9USrTw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "da76ab53-0dcf-4716-b509-b299b84ca269",
+                            SecurityStamp = "672060ee-6fae-4fe3-8a80-981213d5951f",
                             TwoFactorEnabled = false,
                             UserName = "factoryManager@mail.com"
                         },
@@ -189,15 +191,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fca71d16-57a6-4cef-bac9-8c0a0515ae88",
+                            ConcurrencyStamp = "973c17d3-5064-4311-9941-8cfc32e30d05",
                             Email = "supervisor@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "supervisor@mail.com",
                             NormalizedUserName = "supervisor@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDS1pw/YSmphTQRm8pngIBKS3ZI7TUayEvqKwEZBmc5lRZbF76Kd7lS9JWiGUpZ3ew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED2Sstx7CHnjDqXBwRNR4ljDIXmGnG5noueG8eCVFraG8wcnguroNNfm3nE+frtVww==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "93c0cd28-e99c-427c-9aec-17135c22fc73",
+                            SecurityStamp = "5dc84768-6d06-4417-a3c8-4fac57f77197",
                             TwoFactorEnabled = false,
                             UserName = "supervisor@mail.com"
                         },
@@ -205,15 +207,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "64a268d0-e995-41a0-a640-f9defb7f6f85",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0734feaa-efda-4105-9189-872462ecf4ca",
+                            ConcurrencyStamp = "274ceba5-5755-49fc-847d-f4ab9c79ce91",
                             Email = "operator1@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "operator1@mail.com",
                             NormalizedUserName = "operator1@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBQQfVzUGxnO5ChZnIOg9nxktok6Rdw0TfaMh5eC5h63CcFkd1Kh6RffhvmNi4Xf3g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPa0KI6G+sTG5sLl8ePZTJUAEmF+jVeb/lj+NavN3N028NYt00vCHzFeIAMpieSOCQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4cefb68c-8d53-49f0-8903-b08c4a772ee5",
+                            SecurityStamp = "d2b4fc06-3a78-4270-82fd-a0b91e072254",
                             TwoFactorEnabled = false,
                             UserName = "operator1@mail.com"
                         },
@@ -221,15 +223,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "7e07d5d6-f082-454c-91c4-4c101a91aee0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "270f21c3-02db-4fd5-b6bb-5b03eec58a4f",
+                            ConcurrencyStamp = "67b467de-5b90-4367-b863-460bf09f125c",
                             Email = "operator2@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "operator2@mail.com",
                             NormalizedUserName = "operator2@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAt6YSVPAhlC+/jn6I4z+rvlb4MWtVXizNRbK20KJqbZPMwhmex1WLgwLjOy1M60HA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHFenQWgXmO/cgDiaZQK7pgscsUPvk8dDAvyddvmhbLkJvWpGPkxBvdQJ04jkKXA2A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9acc92f2-929b-4996-b6d5-dad5cbcdf10e",
+                            SecurityStamp = "43fe17ec-1b7f-440c-be7d-ed48e3fa2011",
                             TwoFactorEnabled = false,
                             UserName = "operator2@mail.com"
                         },
@@ -237,15 +239,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "82ebe75b-2512-4a2f-af3d-b9edf0d1ef5b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d37dc1cd-0625-4751-b63e-b49338943262",
+                            ConcurrencyStamp = "02df4620-aa69-4b86-adef-6607f2976d82",
                             Email = "operator3@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "operator3@mail.com",
                             NormalizedUserName = "operator3@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE2qgmHBCc9x1aiQtMuegsnAoo4uCKcnKVAJpgWaI9uZ5QbqEDh8uDeMM+et/xXvZQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOdV8JkCG5PHHZVJEJOzNDhGBYe0ruUsj5Di36Ronp8CxNZRa6kLi+eHnXUDoYc+GA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8a59a02e-c99e-4f6e-8ed0-3a81d4b9fe0b",
+                            SecurityStamp = "76731577-5d1e-4157-9527-efc9f4dd117f",
                             TwoFactorEnabled = false,
                             UserName = "operator3@mail.com"
                         },
@@ -253,15 +255,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "c77fc444-d5a0-45c2-a576-667a021b6d1f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "25481391-218d-4008-b3c0-9ff197f1bfc6",
+                            ConcurrencyStamp = "e0cebea5-060f-4fe2-b277-cf02a771caf1",
                             Email = "operator4@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "operator4@mail.com",
                             NormalizedUserName = "operator4@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIWljLjKeKFgp+qzsMW29iaVP1nBbE5DqklkCn1rX/yNijIghtCfMsW8lmeOBjnGcQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDXWpduTM8l+vEfXTV2mck30m1QKbc4/QB2DRXvtXdcURbPfoojzJauFrM3OFZYuYg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5ffdbe69-bd11-4c21-8bfe-d3366d9c0c5f",
+                            SecurityStamp = "a8913614-b486-4774-94ff-35a4fd398d7c",
                             TwoFactorEnabled = false,
                             UserName = "operator4@mail.com"
                         },
@@ -269,15 +271,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "25cb202d-9873-432c-b049-f9184c3ce525",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fbdd05c0-90c0-46e7-8762-33d7c167805c",
+                            ConcurrencyStamp = "ce069347-9b2c-4aaa-9a92-455120c7e83b",
                             Email = "electrician1@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "electrician1@mail.com",
                             NormalizedUserName = "electrician1@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC1qJU9Y9vPbESbCEVQ4RIctb9l2odSga48xQZk6KLK9sjFdT/lPU6FXv4JnqVxAsQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBtfJhgUYh0zdezNitb1ANNgbyZdflREIuopuqFVFeVPuUXqgE+hed3WT8zjezKX8Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "987d830f-5989-4694-a502-21b8dd960f3a",
+                            SecurityStamp = "081e31ab-3ad2-448b-984e-eabaf3fe8b3b",
                             TwoFactorEnabled = false,
                             UserName = "electrician1@mail.com"
                         },
@@ -285,15 +287,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = "58434ec1-2216-4b26-869e-94db0c1f7d09",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1beddf79-a198-4174-9ca9-0fb28a25af37",
+                            ConcurrencyStamp = "0af1ea51-03c7-4b9f-9dd4-535ed852942b",
                             Email = "electrician2@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "electrician2@mail.com",
                             NormalizedUserName = "electrician2@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ7cEYZjspiSiUKALAtabTqwyWgQz4MuAYwP1s5+tbJTjRGm4t3KoM7BBdHQ78WXFg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENWVO6eOiScjwsuIba+pcbOHrZVF5Trkr/c2FV4XB7iR8ZDCO1YE0bPK0uUlEDTFkw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "efe526a3-6a7c-4c65-a824-02fa72d1b4a2",
+                            SecurityStamp = "1fcaa19c-2e48-4add-9f45-4c184bcd3661",
                             TwoFactorEnabled = false,
                             UserName = "electrician2@mail.com"
                         },
@@ -301,15 +303,15 @@ namespace SmartFactory.Infrastructure.Migrations
                         {
                             Id = " 67905730 - 9c1f - 43fb - bf6b - e8dfd5abfd83",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "66774e50-dbd0-48de-807a-a6eeb8f34c80",
+                            ConcurrencyStamp = "9c36e67e-1170-455e-8581-c0e5638e9ca3",
                             Email = "operatorleave@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "operatorleave@mail.com",
                             NormalizedUserName = "operatorleave@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHClbbgctQFjHifnWanC1RN3c5Zjdqrba+L88bEiIvkkqgf3lQTIafCScVuvYikxkg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENSyhuf2OmzNcJJwyozMHs9BSKiZ/lc5y6R57pTLOgDnPKZIsnGIcicoUdTAznkL9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5b824979-26b7-40f1-809d-88c0bac317b4",
+                            SecurityStamp = "9369e810-003e-43f6-bdce-a4e8c9f33dd5",
                             TwoFactorEnabled = false,
                             UserName = "operatorleave@mail.com"
                         });
@@ -588,7 +590,7 @@ namespace SmartFactory.Infrastructure.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PositionType")
+                    b.Property<int?>("PositionType")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

@@ -15,16 +15,28 @@
 
 
             <div class="form-group">
-                <label asp-for="Title"></label>
+                <label asp-for="Title">Наименование</label>
                 <input asp-for="Title" class="form-control" placeholder="Наименование...">
                 <span asp-validation-for="Title" class="small text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description"></label>
+                <label asp-for="Description">Описание</label>
                 <textarea asp-for="Description" rows="4" class="form-control" placeholder="Описание..."></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
-           
+            <div class="form-group">
+
+                <label asp-for="PositionType">Тип на длъжността</label>
+                <select asp-for="PositionType" class="form-control">
+
+
+                    <option value="@SmartFactory.Infrastructure.Data.PositionType.factoryManager">Висш мениджмънт</option>
+                    <option value="@SmartFactory.Infrastructure.Data.PositionType.Manager">Ръководен персонал</option>
+                    <option value="@SmartFactory.Infrastructure.Data.PositionType.Electrical">Електротехник</option>
+                    <option value="@SmartFactory.Infrastructure.Data.PositionType.Operator">Оператор</option>
+                </select>
+                <span asp-validation-for="PositionType" class="small text-danger"></span>
+            </div>
 
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Запази" />
